@@ -6,10 +6,10 @@ import java.awt.Color;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field
- * containing rabbits and foxes.
+ * containing rabbits,foxes, and
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29 (2)
+ * @author Karen Stagg
+ * @version November 16, 2020
  */
 public class Simulator
 {
@@ -61,7 +61,7 @@ public class Simulator
         view = new SimulatorView(depth, width);
         view.setColor(Rabbit.class, Color.ORANGE);
         view.setColor(Fox.class, Color.BLUE);
-        
+                
         // Setup a valid starting point.
         reset();
     }

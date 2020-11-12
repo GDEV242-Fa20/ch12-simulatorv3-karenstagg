@@ -6,8 +6,8 @@ import java.util.Random;
  * A simple model of a fox.
  * Foxes age, move, eat rabbits, and die.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29 (2)
+ * @author Karen Stagg
+ * @version November 16, 2020
  */
 public class Fox extends Animal
 {
@@ -24,12 +24,10 @@ public class Fox extends Animal
     // The food value of a single rabbit. In effect, this is the
     // number of steps a fox can go before it has to eat again.
     private static final int RABBIT_FOOD_VALUE = 9;
-    // A shared random number generator to control breeding.
+    // A shared random number generator to control random rabbit fod value.
     private static final Random rand = Randomizer.getRandom();
     
     // Individual characteristics (instance fields).
-    // The fox's age.
-    private int age;
     // The fox's food level, which is increased by eating rabbits.
     private int foodLevel;
 
@@ -43,13 +41,13 @@ public class Fox extends Animal
      */
     public Fox(boolean randomAge, Field field, Location location)
     {
-        super(field, location);
-        if(randomAge) {
-            age = rand.nextInt(MAX_AGE);
+        super(randomAge, field, location);
+        if(randomAge) 
+        {
             foodLevel = rand.nextInt(RABBIT_FOOD_VALUE);
         }
-        else {
-            age = 0;
+        else
+        {
             foodLevel = RABBIT_FOOD_VALUE;
         }
     }
@@ -83,16 +81,45 @@ public class Fox extends Animal
             }
         }
     }
-
+    
     /**
-     * Increase the age. This could result in the fox's death.
+     * Return the MAX_AGE for a fox.
+     * 
+     * @return the MAX_AGE for a fox.
      */
-    private void incrementAge()
+    public int getMaxAge()
     {
-        age++;
-        if(age > MAX_AGE) {
-            setDead();
-        }
+        return MAX_AGE;
+    }
+    
+    /**
+     * Return the age at which a fox starts to breed.
+     * 
+     * @return the age at which a fox starts to breed.
+     */
+    public int getBreedingAge()
+    {
+        return BREEDING_AGE;
+    }
+    
+    /**
+     * Return the breeding probability for a fox.
+     * 
+     * @return the breeding probability for a fox.
+     */
+    public double getBreedingProbability()
+    {
+        return BREEDING_PROBABILITY;
+    }
+    
+    /**
+     * Return the max litter size for a fox.
+     * 
+     * @return the max litter size for a fox.
+     */
+    public int getMaxLitterSize()
+    {
+        return MAX_LITTER_SIZE;
     }
     
     /**
@@ -149,26 +176,5 @@ public class Fox extends Animal
             newFoxes.add(young);
         }
     }
-        
-    /**
-     * Generate a number representing the number of births,
-     * if it can breed.
-     * @return The number of births (may be zero).
-     */
-    private int breed()
-    {
-        int births = 0;
-        if(canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
-            births = rand.nextInt(MAX_LITTER_SIZE) + 1;
-        }
-        return births;
-    }
-
-    /**
-     * A fox can breed if it has reached the breeding age.
-     */
-    private boolean canBreed()
-    {
-        return age >= BREEDING_AGE;
-    }
+     
 }
